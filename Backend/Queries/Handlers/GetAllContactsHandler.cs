@@ -30,6 +30,15 @@ namespace ContactApp.Backend.Queries.Handlers
                     x.Surname.ToLower().Contains(request.SearchText.ToLower()));
             }
 
+            if (request.ShowRetired.HasValue && request.ShowRetired.Value)
+            {
+                query = query.Where(x => x.IsRetired);
+            }
+            else
+            {
+                query = query.Where(x => !x.IsRetired);
+            }
+
             return query;
         }
     }

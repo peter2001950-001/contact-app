@@ -10,13 +10,12 @@ using ContactApp.Backend.Data.Entities;
 
 namespace ContactApp.Backend.Commands.Handlers
 {
-    public class UpdateCommandHandler : BaseUpdateHandler<Contact, UpdateContactCommand, ContactResponse>
+    public class ReactivateContactHandler : BaseReactivateHandler<Contact, ReactivateContactCommand, ContactResponse>
     {
-        public UpdateCommandHandler(ApplicationDbContext applicationDbContext, IMapper mapper) : base(applicationDbContext, mapper)
+        public ReactivateContactHandler(ApplicationDbContext dbContext, IMapper mapper) : base(dbContext, mapper)
         {
         }
 
         protected override IQueryable<Contact> Query => dbContext.Contacts.AsQueryable();
-
     }
 }

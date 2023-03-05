@@ -9,12 +9,27 @@ using System.Threading.Tasks;
 
 namespace ContactApp.Backend
 {
+
+    public static class Application
+    {
+        public class SwitchesSection
+        {
+            public int DeleteRetiredLookbackDays { get; set; }
+
+        }
+
+        public static IConfiguration Configuration { get; set; }
+
+        public static SwitchesSection Switches => Configuration.GetSection("Switches").Get<SwitchesSection>();
+    }
+
     public class Program
     {
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
         }
+        
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)

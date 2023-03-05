@@ -11,8 +11,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using ContactApp.Backend.Commands;
 using ContactApp.Backend.Data;
+using ContactApp.Backend.Hangfire;
+using ContactApp.Backend.Utility;
+using ContactApp.Backend.Validations;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Hangfire;
+using Hangfire.Redis;
+using MediatR.Extensions.FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
 namespace ContactApp.Backend
@@ -22,6 +32,7 @@ namespace ContactApp.Backend
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            Application.Configuration = Configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -29,6 +40,11 @@ namespace ContactApp.Backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<HangfireConfiguration>(options => Configuration.GetSection("Hangfire").Bind(options));
+
+
+            services.AddHangfireServer();
+
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo
@@ -38,12 +54,24 @@ namespace ContactApp.Backend
                     Description = "This is the backend endpoints of Contact App",
                 });
             });
+            services.AddMvcCore(options =>
+            {
+                options.Filters.Add(new CustomValidationAttribute());
+            });
             services.AddAutoMapper(typeof(Startup));
-            services.AddControllers();
+            services.AddControllers().ConfigureApiBehaviorOptions(options => { options.SuppressModelStateInvalidFilter = true; }); ;
+
+
+            services.AddValidatorsFromAssemblyContaining<InsertContactCommand>();
+            ValidatorOptions.Global.PropertyNameResolver = CamelCasePropertyNameResolver.ResolvePropertyName;
+            services.AddFluentValidationAutoValidation();
+
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Startup).Assembly));
+            services.AddHangfireImplementation(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,11 +81,11 @@ namespace ContactApp.Backend
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+            app.UseMiddleware<ExceptionMiddleware>();
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseHangfireDashboard();
             app.UseAuthorization();
             app.UseSwagger();
             app.UseSwaggerUI(options =>

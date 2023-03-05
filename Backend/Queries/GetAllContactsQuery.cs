@@ -10,11 +10,14 @@ namespace ContactApp.Backend.Queries
 {
     public class GetAllContactsQuery : BasePaginationQuery<ContactResponse>
     {
-        public GetAllContactsQuery(PaginatedRequest paginatedRequest)
+        public GetAllContactsQuery(PaginatedRequest paginatedRequest, bool showRetired, string searchText)
         {
             PaginatedRequest = paginatedRequest;
+            ShowRetired = showRetired;
+            SearchText = searchText;
         }
 
         public string SearchText { get; set; }
+        public bool? ShowRetired { get; set; }
     }
 }

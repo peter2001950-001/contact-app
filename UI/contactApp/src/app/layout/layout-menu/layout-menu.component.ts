@@ -17,7 +17,8 @@ export class LayoutMenuComponent implements OnInit {
             {
                 label: 'Home',
                 items: [
-                    { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }
+                    { label: 'All Contact', icon: 'pi pi-fw pi-home', routerLink: ['/contacts'] },
+                    { label: 'Archived Contact', icon: 'pi pi-fw pi-home', routerLink: ['/contacts/archive'] }
                 ]
             }
         ];

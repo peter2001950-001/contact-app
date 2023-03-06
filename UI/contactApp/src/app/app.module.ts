@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { httpInterceptorProviders } from './http-interceptors';
 import { ENVIRONMENT } from './services/shared';
+import {ToastModule} from 'primeng/toast';
 
 @NgModule({
   declarations: [

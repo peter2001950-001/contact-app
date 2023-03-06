@@ -54,13 +54,13 @@ namespace ContactApp.Backend.Controllers
             return Ok(response);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [SwaggerResponse(200, "Success", typeof(ContactResponse))]
         [SwaggerResponse(400, "Bad request", typeof(ValidationFailedResponse))]
         [SwaggerResponse(404, "Not found")]
-        public async Task<IActionResult> RetireContactAsync([FromBody] RetireContactCommand request)
+        public async Task<IActionResult> RetireContactAsync(Guid id)
         {
-            var response = await mediator.Send(request);
+            var response = await mediator.Send(new RetireContactCommand(){Id = id});
             return Ok(response);
         }
 

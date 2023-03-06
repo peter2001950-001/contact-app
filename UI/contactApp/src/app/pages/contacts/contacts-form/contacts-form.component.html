@@ -1,44 +1,52 @@
-<div class="grid" style="margin-top: 25px;">
+<form [formGroup]="form"  style="margin-top: 25px;">
+  <div class="grid">
     <div class="col-6 mt-2">
       <span class="p-float-label">
-        <input id="lastName" type="text" class="p-inputtext-lg" pInputText/>
+        <input id="lastName" pInputText  type="text" formControlName="firstName" class="p-inputtext-lg" pInputText
+        [ngClass]="{ error: form.get('firstName')?.invalid && form.get('firstName')?.touched }"/>
         <label for="lastName">First name</label>
       </span>
     </div>
     <div class="col-6 mt-2">
       <span class="p-float-label">
-        <input id="lastName" type="text" class="p-inputtext-lg" pInputText/>
-        <label for="lastName">Surname</label>
+        <input id="surname" pInputText  type="text" formControlName="surname" class="p-inputtext-lg" pInputText
+        [ngClass]="{ error: form.get('surname')?.invalid && form.get('surname')?.touched }" />
+        <label for="surname">Surname</label>
       </span>
     </div>
     <div class="col-6 mt-2">
       <span class="p-float-label">
-        <input id="lastName" type="text" class="p-inputtext-lg" pInputText/>
-        <label for="lastName">Phone number</label>
+        <input id="phoneNumber" pInputText formControlName="phoneNumber"   type="text" class="p-inputtext-lg" pInputText
+        [ngClass]="{ error: form.get('phoneNumber')?.invalid && form.get('phoneNumber')?.touched }"/>
+        <label for="phoneNumber">Phone number</label>
       </span>
     </div>
     <div class="col-6 mt-2">
       <span class="p-float-label">
         <span class="p-float-label">
-          <p-inputMask style="width: 100%"  mask="99/99/9999" formControlName="dateOfBirth" class="p-inputtext-lg"  slotChar="dd/mm/yyyy"></p-inputMask>
+          <p-inputMask formControlName="dateOfBirth" mask="99/99/9999" class="p-inputtext-lg"  slotChar="dd/mm/yyyy"
+          [styleClass]="(form.get('dateOfBirth')?.invalid && form.get('dateOfBirth')?.touched)?'error': ''"></p-inputMask>
           <label for="dateOfBirth">Date of birth</label>
         </span>
       </span>
     </div>
     <div class="col-12 mt-2">
       <span class="p-float-label">
-        <input id="lastName" type="text" class="p-inputtext-lg" pInputText/>
+        <input id="lastName" type="text" pInputText formControlName="address" class="p-inputtext-lg" pInputText
+         [ngClass]="{ error: form.get('address')?.invalid && form.get('address')?.touched }" />
         <label for="lastName">Address</label>
       </span>
     </div>
     <div class="col-12 mt-2">
       <span class="p-float-label">
-        <input id="lastName" type="text" class="p-inputtext-lg" pInputText/>
+        <input id="lastName" type="text" pInputText formControlName="iban" class="p-inputtext-lg" pInputText
+        [ngClass]="{ error: form.get('iban')?.invalid && form.get('iban')?.touched }" />
         <label for="lastName">Iban</label>
       </span>
     </div>
-    <div class="flex justify-content-end mt-2 px-2" style="width: 100%;">
-      <button pButton>Save changes</button>
-    </div>
 
+  </div>
+</form>
+<div class="flex justify-content-end mt-2 px-2" style="width: 100%;">
+  <button pButton (click)="save()">Save changes</button>
 </div>

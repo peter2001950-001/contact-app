@@ -1,3 +1,5 @@
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -15,11 +17,14 @@ import { LayoutSidebarComponent } from './layout-sidebar/layout-sidebar.componen
     LayoutTopbarComponent,
     LayoutMenuComponent,
     LayoutMenuitemComponent,
-    LayoutSidebarComponent
+    LayoutSidebarComponent,
+
   ],
   imports: [
     CommonModule,
-    LayoutRoutingModule
-  ]
+    LayoutRoutingModule,
+    ToastModule
+  ],
+  providers:[MessageService]
 })
 export class LayoutModule { }

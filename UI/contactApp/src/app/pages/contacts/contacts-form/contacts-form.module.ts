@@ -3,8 +3,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContactsFormComponent } from './contacts-form.component';
-import { CalendarModule } from 'primeng/calendar';
 import {InputMaskModule} from 'primeng/inputmask';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -14,6 +14,8 @@ import {InputMaskModule} from 'primeng/inputmask';
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     InputTextModule,
     InputMaskModule,
     ButtonModule

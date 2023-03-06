@@ -1,3 +1,5 @@
+import { ContactsEditModule } from './contacts-edit/contacts-edit.module';
+import { ContactsEditComponent } from './contacts-edit/contacts-edit.component';
 import { ContactsFormModule } from './contacts-form/contacts-form.module';
 import { ContactsCreateModule } from './contacts-create/contacts-create.module';
 import { ContactListModule } from './contact-list/contact-list.module';
@@ -13,7 +15,8 @@ import { ContactsRoutingModule } from './contacts-routing.module';
     CommonModule,
     ContactsRoutingModule,
     ContactListModule,
-    ContactsCreateModule
+    ContactsCreateModule,
+    ContactsEditModule
   ]
 })
 export class ContactsModule { }

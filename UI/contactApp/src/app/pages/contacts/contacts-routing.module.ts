@@ -7,6 +7,10 @@ const routes: Routes = [
     path: '',
     component: ContactListComponent
   },
+  {
+    path: 'archive',
+    component: ContactListComponent, data: {name: "archived"}
+  }
 ];
 
 @NgModule({

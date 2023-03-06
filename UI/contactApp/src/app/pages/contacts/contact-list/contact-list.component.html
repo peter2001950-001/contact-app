@@ -1,50 +1,65 @@
 <div class="grid">
-<div class="col-12">
-  <div class="card">
-      <h5>All Contacts</h5>
+  <div class="col-12">
+    <div class="card">
+      <ng-container *ngIf="archived">
+        <h5>Archived Contacts</h5>
+        <p>You can recover these contacts or they will be deleted within 30 days</p>
+      </ng-container>
+      <ng-container *ngIf="!archived">
+        <h5>All Contacts</h5>
+      </ng-container>
 
       <p-table [value]="contacts" [paginator]="false" [rows]="5" responsiveLayout="scroll">
         <ng-template pTemplate="caption">
           <div class="table-header p-d-flex p-jc-between p-ai-center">
             <div class="p-d-flex p-jc-between p-ai-center" style="display: flex; justify-content: space-between;
             align-items: end;">
-              <div>
-              <h5>Search for a contact</h5>
-              <div class="p-inputgroup" style="width: fit-content">
-                <input type="text" pInputText placeholder="Keyword" (input)="search($event)" />
-                <button type="button" pButton pRipple label="Search"></button>
+              <div class="flex" style="align-content: end;">
+                <div>
+                  <h5>Search for a contact</h5>
+                  <div class="p-inputgroup" style="width: fit-content">
+                    <input type="text" pInputText placeholder="Keyword" (input)="search($event)" />
+                    <button type="button" pButton pRipple label="Search"></button>
+                  </div>
+                </div>
+                <div>
+                </div>
               </div>
-            </div>
-            <div>
-              <button type="button" pButton pRipple label="Add new contact" (click)="open()"></button>
-            </div>
+              <div *ngIf="! archived">
+                <button type="button" pButton pRipple label="Add new contact" (click)="open()"></button>
+              </div>
 
             </div>
           </div>
         </ng-template>
         <ng-template pTemplate="header">
-              <tr>
-                  <th pSortableColumn="firstName">First name <p-sortIcon field="firstName"></p-sortIcon></th>
-                  <th pSortableColumn="surname">Surname <p-sortIcon field="surname"></p-sortIcon></th>
-                  <th>Telephone</th>
-                  <th>Address</th>
-                  <th>Actions</th>
-              </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-contact>
-              <tr>
+          <tr>
+            <th pSortableColumn="firstName">First name <p-sortIcon field="firstName"></p-sortIcon></th>
+            <th pSortableColumn="surname">Surname <p-sortIcon field="surname"></p-sortIcon></th>
+            <th>Telephone</th>
+            <th>Address</th>
+            <th>Actions</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-contact>
+          <tr>
 
-                  <td>{{contact.firstName}}</td>
-                  <td>{{contact.surname}}</td>
-                  <td>{{contact.phoneNumber}}</td>
-                  <td>{{contact.address}}</td>
-                  <td style="width: 15%;">
-                      <button pButton pRipple type="button" icon="pi pi-search" class="p-button p-component p-button-text p-button-icon-only"></button>
-                  </td>
-              </tr>
-          </ng-template>
+            <td>{{contact.firstName}}</td>
+            <td>{{contact.surname}}</td>
+            <td>{{contact.phoneNumber}}</td>
+            <td>{{contact.address}}</td>
+            <td style="width: 15%;">
+              <button *ngIf="!archived" pButton pRipple type="button" (click)="archive(contact)" icon="pi pi-trash"
+                class="p-button p-component p-button-text p-button-icon-only"></button>
+                <button *ngIf="archived" pButton pRipple type="button" (click)="recover(contact)"  class="p-button p-component p-button-success">Recover</button>
+              <button pButton pRipple type="button" (click)="open(contact)" icon="pi pi-search"
+                class="p-button p-component p-button-text p-button-icon-only"></button>
+            </td>
+          </tr>
+        </ng-template>
       </p-table>
-      <p-paginator [rows]="10" [rowsPerPageOptions]="[10, 25, 50]" [totalRecords]="totalCount" (onPageChange)="paginate($event)"></p-paginator>
-  </div>
+      <p-paginator [rows]="10" [rowsPerPageOptions]="[10, 25, 50]" [totalRecords]="totalCount"
+        (onPageChange)="paginate($event)"></p-paginator>
+    </div>
   </div>
 </div>

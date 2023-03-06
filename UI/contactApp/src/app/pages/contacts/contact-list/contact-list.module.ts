@@ -6,6 +6,7 @@ import {TableModule} from "primeng/table";
 import { ButtonModule } from 'primeng/button';
 import { PaginatorModule } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
+import {CheckboxModule} from 'primeng/checkbox';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { InputTextModule } from 'primeng/inputtext';
     TableModule,
     ButtonModule,
     PaginatorModule,
-    InputTextModule
+    InputTextModule,
+    CheckboxModule
   ],
   providers:[DialogService],
   declarations: [ContactListComponent]

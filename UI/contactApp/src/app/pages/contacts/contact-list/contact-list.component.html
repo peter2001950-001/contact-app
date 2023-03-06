@@ -1,0 +1,50 @@
+<div class="grid">
+<div class="col-12">
+  <div class="card">
+      <h5>All Contacts</h5>
+
+      <p-table [value]="contacts" [paginator]="false" [rows]="5" responsiveLayout="scroll">
+        <ng-template pTemplate="caption">
+          <div class="table-header p-d-flex p-jc-between p-ai-center">
+            <div class="p-d-flex p-jc-between p-ai-center" style="display: flex; justify-content: space-between;
+            align-items: end;">
+              <div>
+              <h5>Search for a contact</h5>
+              <div class="p-inputgroup" style="width: fit-content">
+                <input type="text" pInputText placeholder="Keyword" (input)="search($event)" />
+                <button type="button" pButton pRipple label="Search"></button>
+              </div>
+            </div>
+            <div>
+              <button type="button" pButton pRipple label="Add new contact" (click)="open()"></button>
+            </div>
+
+            </div>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+              <tr>
+                  <th pSortableColumn="firstName">First name <p-sortIcon field="firstName"></p-sortIcon></th>
+                  <th pSortableColumn="surname">Surname <p-sortIcon field="surname"></p-sortIcon></th>
+                  <th>Telephone</th>
+                  <th>Address</th>
+                  <th>Actions</th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-contact>
+              <tr>
+
+                  <td>{{contact.firstName}}</td>
+                  <td>{{contact.surname}}</td>
+                  <td>{{contact.phoneNumber}}</td>
+                  <td>{{contact.address}}</td>
+                  <td style="width: 15%;">
+                      <button pButton pRipple type="button" icon="pi pi-search" class="p-button p-component p-button-text p-button-icon-only"></button>
+                  </td>
+              </tr>
+          </ng-template>
+      </p-table>
+      <p-paginator [rows]="10" [rowsPerPageOptions]="[10, 25, 50]" [totalRecords]="totalCount" (onPageChange)="paginate($event)"></p-paginator>
+  </div>
+  </div>
+</div>

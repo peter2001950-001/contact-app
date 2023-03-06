@@ -54,6 +54,16 @@ namespace ContactApp.Backend
                     Description = "This is the backend endpoints of Contact App",
                 });
             });
+            services.AddCors(options =>
+            {
+                options.AddPolicy("frontend",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod().WithExposedHeaders("Content-Disposition");
+                    });
+            });
             services.AddMvcCore(options =>
             {
                 options.Filters.Add(new CustomValidationAttribute());
@@ -81,6 +91,8 @@ namespace ContactApp.Backend
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors("frontend");
+           
             app.UseMiddleware<ExceptionMiddleware>();
             app.UseHttpsRedirection();
 

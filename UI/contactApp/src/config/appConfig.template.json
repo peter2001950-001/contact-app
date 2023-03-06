@@ -1,0 +1,11 @@
+{
+  "frontend": {
+    "baseUrl": "$FRONTEND_BASEURL"
+  },
+  "backend": {
+    "baseUrl": "$API_BASEURL"
+  },
+  "buildId": "$buildId",
+  "buildNumber": "$buildNumber",
+  "buildDate": "$buildDate"
+}

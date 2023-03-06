@@ -13,7 +13,7 @@ using Swashbuckle.Swagger.Annotations;
 
 namespace ContactApp.Backend.Controllers
 {
-    [Route("api/contact")]
+    [Route("api/contacts")]
     [ApiController]
     public class ContactController : ControllerBase
     {

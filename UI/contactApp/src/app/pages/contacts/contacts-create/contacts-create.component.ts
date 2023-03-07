@@ -4,6 +4,8 @@ import { catchError, throwError } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { errorHandling } from 'src/app/services/error-handling';
+import { Store } from '@ngrx/store';
+import * as contactActions from "../../../app-state/actions/contact.actions";
 
 @Component({
   selector: 'app-contacts-create',
@@ -12,7 +14,7 @@ import { errorHandling } from 'src/app/services/error-handling';
 })
 export class ContactsCreateComponent implements OnInit {
 
-  constructor(private svc: ContactsService, private messageService: MessageService, private ref: DynamicDialogRef) {
+  constructor(private readonly store: Store, private svc: ContactsService, private messageService: MessageService, private ref: DynamicDialogRef) {
 
   }
   public request: any;
@@ -28,19 +30,9 @@ export class ContactsCreateComponent implements OnInit {
   }
 
   onSubmit(event: any){
-    this.svc.create(event).pipe(
-      catchError((err: any) => {
-      errorHandling(err, this.messageService);
-      console.log(err);
-      return throwError(err);
-  })).subscribe(res=>{
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Success',
-      detail: 'Successfully saved contact'
-    });
-    this.ref.close(res);
-  },err=>{});
+
+    this.store.dispatch(contactActions.createContact({contact: event}))
+    this.ref.close();
   }
 
   onCancel(event: any){

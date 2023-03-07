@@ -1,3 +1,5 @@
+import { MessageService } from 'primeng/api';
+import { ContactEffects } from './app-state/effects/contact.effects';
 import { CoreModule } from './services/core.module';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -10,6 +12,9 @@ import { AppComponent } from './app.component';
 import { httpInterceptorProviders } from './http-interceptors';
 import { ENVIRONMENT } from './services/shared';
 import {ToastModule} from 'primeng/toast';
+import { StoreModule } from '@ngrx/store';
+import { metaReducers, reducers } from './app-state';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -19,7 +24,12 @@ import {ToastModule} from 'primeng/toast';
     BrowserModule,
     AppRoutingModule,
     CoreModule,
-    BrowserAnimationsModule
+    ToastModule,
+    BrowserAnimationsModule,
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+    }),
+    EffectsModule.forRoot([ContactEffects])
   ],
   providers: [httpInterceptorProviders,
     { provide: ENVIRONMENT, useValue: environment }],

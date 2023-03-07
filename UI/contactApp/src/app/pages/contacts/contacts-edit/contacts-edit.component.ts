@@ -4,6 +4,8 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Component, OnInit } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 import { errorHandling } from 'src/app/services/error-handling';
+import { Store } from '@ngrx/store';
+import * as contactActions from "../../../app-state/actions/contact.actions";
 
 @Component({
   selector: 'app-contacts-edit',
@@ -11,11 +13,10 @@ import { errorHandling } from 'src/app/services/error-handling';
   styleUrls: ['./contacts-edit.component.scss']
 })
 export class ContactsEditComponent implements OnInit {
-    constructor(public config: DynamicDialogConfig , private ref: DynamicDialogRef,  private svc: ContactsService, private messageService: MessageService){}
+    constructor(private readonly store: Store, public config: DynamicDialogConfig , private ref: DynamicDialogRef,  private svc: ContactsService, private messageService: MessageService){}
     public request: any;
 
     ngOnInit(): void {
-        console.log(this.config.data)
         this.request = {...this.config.data};
         var dateOfBirth = this.config.data.dateOfBirth;
         this.request.dateOfBirth = this.parseDateToString(dateOfBirth);
@@ -23,19 +24,8 @@ export class ContactsEditComponent implements OnInit {
     }
 
     onSubmit(event: any){
-      this.svc.update(this.request.id, event).pipe(
-        catchError((err: any) => {
-        errorHandling(err, this.messageService);
-        console.log(err);
-        return throwError(err);
-    })).subscribe(res=>{
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Success',
-        detail: 'Successfully saved contact'
-      });
-      this.ref.close(res);
-    },err=>{});
+      this.store.dispatch(contactActions.editContact({contact: {id: this.request.id, ...event}}))
+      this.ref.close();
     }
 
 
